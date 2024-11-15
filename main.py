@@ -287,12 +287,14 @@ async def write_master_to_excel():
     workbook.save(excel_path)
     logger.info(f"Data successfully written to {excel_path}")
 
+min = 0
+max = 20900             #EDIT THIS TO WHATEVER YOU NEED
 
 async def main():
     async with aiohttp.ClientSession() as session:
         semaphore = asyncio.Semaphore(CONCURRENT_REQUESTS)
         
-        tournament_ids = range(15000, 20000)
+        tournament_ids = range(min, max)
         tasks = [
             get_tournament_stats(session, tournament_id, semaphore)
             for tournament_id in tournament_ids
